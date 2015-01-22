@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MissionManager : MonoBehaviour {
 
-	private const float LEVEL_TIME = 10;
+	private const float LEVEL_TIME = 1;
 	private const float MAX_MISSION_TIME = 3f;
 	private const float MIN_MISSION_TIME = 1f;
 
-	public ScoreScreen splash;
+	public ScoreScreen scores;
 	public SpriteRenderer Player1;
 	private int Score1;
 	public SpriteRenderer Player2;
@@ -16,6 +16,7 @@ public class MissionManager : MonoBehaviour {
 	private Component[] sprites;
 	private int level;
 	public GameHex[] GameHexes;
+	private bool running = false;
 
 	// Static access
 	private static MissionManager instance;
@@ -33,11 +34,18 @@ public class MissionManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetKeyDown(KeyCode.Escape)) 
+		{
+			if (running)
+				Levelend();
+			else
+				Application.Quit(); 
+		}
 	}
 
 	public void init()
 	{
+		running = true;
 		Score1 = 0;
 		Score2 = 0;
 		level=0;
@@ -75,13 +83,12 @@ public class MissionManager : MonoBehaviour {
 	
 	private void Levelend()
 	{
+		running = false;
 		CancelInvoke();
 		foreach (GameHex hex in GameHexes)
 			hex.end();
 
-		// scores.play();
-
-		splash.play(Score1,Score2);
+		scores.play(Score1,Score2);
 	}
 	
 	private void pressed(Sprite sprite)
