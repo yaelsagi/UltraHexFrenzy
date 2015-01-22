@@ -5,7 +5,6 @@ public class MissionManager : MonoBehaviour {
 
 	private const float LEVEL_TIME = 10;
 
-	private static MissionManager instance;
 	public SpriteRenderer Player1;
 	private int Score1;
 	public SpriteRenderer Player2;
@@ -15,6 +14,12 @@ public class MissionManager : MonoBehaviour {
 	private int level;
 	public GameHex[] GameHexes;
 
+	// Static access
+	private static MissionManager instance;
+	public static void Init(){instance.init();}
+	public static Sprite RandomImage(){return instance.randomImage();}
+	public static void Pressed(Sprite sprite){instance.pressed(sprite);}
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -26,50 +31,43 @@ public class MissionManager : MonoBehaviour {
 	
 	}
 
-	public static void Init()
-	{
-		instance.init();
-	}
-	
 	public void init()
 	{
+		level=0;
+		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
+		Invoke("nextLevel",LEVEL_TIME);//"Invoke" calls the function/methud that is inside the(""), the number is the number of secends before it das that.
 
 		foreach (GameHex hex in GameHexes)
 			hex.init();
-		
-		level=0;
-		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>();
-		Invoke("nextLevel",LEVEL_TIME);//"Invoke" calls the function/methud that is inside the(""), the number is the number of secends before it das that.
-	}
-	
-	public static Sprite RandomImage()
-	{
-		return ((SpriteRenderer)instance.sprites[Random.Range(0,instance.sprites.Length)]).sprite;
 	}
 
+	public Sprite randomImage()
+	{
+		int index = Random.Range(0,sprites.Length);
+		Sprite result = ((SpriteRenderer)sprites[index]).sprite;
+		return result;
+	}
+	
 	private void nextLevel()
 	{
 		level++;
-		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>();
 
-		if(level > Levels.Length)
+		if(level == Levels.Length)
+		{
 			Levelend();
-		else
-			instance.Invoke("nextLevel",3);
+			return;
+		}
+
+		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
+		instance.Invoke("nextLevel",3);
 	}
-
-
+	
 	private void Levelend()
 	{
 		foreach (GameHex hex in GameHexes)
 			hex.end();
 	}
-
-	public static void Pressed(Sprite sprite)
-	{
-		instance.pressed(sprite);
-	}
-
+	
 	private void pressed(Sprite sprite)
 	{
 		if (Player1.sprite == sprite)

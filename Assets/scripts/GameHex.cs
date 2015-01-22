@@ -51,9 +51,9 @@ public class GameHex : MonoBehaviour {
 		if (renderer.enabled)
 		{
 			MissionManager.Pressed(GetComponent<SpriteRenderer>().sprite);
+			CancelInvoke();
+			disappear();
+			Invoke("appear", Random.Range(0,MAX_WAIT));
 		}
-		CancelInvoke();
-		disappear();
-		Invoke("appear", Random.Range(0,MAX_WAIT));
 	}
 }
