@@ -9,7 +9,6 @@ public class ScoreScreen : MonoBehaviour
 	public TextMesh score2;
 	public GameObject winner1;
 	public GameObject winner2;
-	public SplashScreen splash;
 
 	public Sprite player1Won;
 	public Sprite player2Won;
@@ -19,7 +18,7 @@ public class ScoreScreen : MonoBehaviour
 	void OnMouseDown() 
 	{
 		gameObject.SetActive(false);
-		splash.play();
+		MissionManager.Init();
 	}
 
 	public void play(int s1, int s2)

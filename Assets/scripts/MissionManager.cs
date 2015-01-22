@@ -13,12 +13,14 @@ public class MissionManager : MonoBehaviour {
 	private int level;
 	public GameHex[] GameHexes;
 	private bool running = false;
+	public AudioSource missionSwitch;
+	public Spark spark;
 
 	// Static access
 	private static MissionManager instance;
 	public static void Init(){instance.init();}
 	public static Sprite RandomImage(){return instance.randomImage();}
-	public static void Pressed(Sprite sprite){instance.pressed(sprite);}
+	public static void Pressed(SpriteRenderer hex){instance.pressed(hex);}
 	
 	// Use this for initialization
 	void Start () 
@@ -33,7 +35,7 @@ public class MissionManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{
 			if (running)
-				endLevel();
+				endGame();
 			else
 				Application.Quit(); 
 		}
@@ -66,7 +68,7 @@ public class MissionManager : MonoBehaviour {
 
 		if(level == Levels.Length)
 		{
-			endLevel();
+			endGame();
 			return;
 		}
 
@@ -77,30 +79,45 @@ public class MissionManager : MonoBehaviour {
 		switchMissions();
 	}
 	
-	private void endLevel()
+	private void endGame()
 	{
 		running = false;
 		CancelInvoke();
 		foreach (GameHex hex in GameHexes)
 			hex.end();
 
+		Player1.sprite = null;
+		Player2.sprite = null;
+
 		scores.play(Score1,Score2);
 	}
 	
-	private void pressed(Sprite sprite)
+	private void pressed(SpriteRenderer hex)
 	{
-		if (Player1.sprite == sprite)
+		if (Player1.sprite == hex.sprite)
+		{
 			Score1+=Levels[level].scorePerHit;
-		if(Player2.sprite == sprite)
+			Spark ins =  (Spark)Instantiate(spark);
+			ins.init(hex.transform.position,Player1.transform.position);
+		}
+		if(Player2.sprite == hex.sprite)
+		{
 			Score2+=Levels[level].scorePerHit;
+			Spark ins =  (Spark)Instantiate(spark);
+			ins.init(hex.transform.position,Player2.transform.position);
+		}
 	}
 
 	private void switchMissions()
 	{
+		Sprite old1 = Player1.sprite;
+		Sprite old2 = Player2.sprite;
 		Player1.sprite = randomImage();
 		Player2.sprite = randomImage();
 		while (Player1.sprite == Player2.sprite)
 			Player2.sprite = randomImage();
+		if(old1 != null && old2 != null && (old1 != Player1.sprite || old2 != Player2.sprite))
+			missionSwitch.Play();
 		Invoke("switchMissions",Random.Range(Levels[level].missionMinTime,Levels[level].missionMaxTime));
 	}
 }

@@ -50,7 +50,7 @@ public class GameHex : MonoBehaviour {
 	{
 		if (renderer.enabled)
 		{
-			MissionManager.Pressed(GetComponent<SpriteRenderer>().sprite);
+			MissionManager.Pressed(GetComponent<SpriteRenderer>());
 			CancelInvoke();
 			disappear();
 			Invoke("appear", Random.Range(0,MAX_WAIT));

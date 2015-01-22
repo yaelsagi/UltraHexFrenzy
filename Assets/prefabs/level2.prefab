@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelTime: 10
-  missionMaxTime: 3
+  missionMaxTime: 5
   missionMinTime: 1
   scorePerHit: 1
 --- !u!212 &21200000
