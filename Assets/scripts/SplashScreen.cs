@@ -7,23 +7,14 @@ public class SplashScreen : MonoBehaviour
 	{
 		renderer.enabled=false;
 		collider2D.enabled=false;
-		ActivatePlayersHexOnGameStart();
+		MissionManager.Init();
 	}
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		renderer.enabled=true;
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
 
-	}
-
-	void ActivatePlayersHexOnGameStart()
-	{
-		
-	}
 }
