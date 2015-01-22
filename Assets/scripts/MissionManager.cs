@@ -3,16 +3,12 @@ using System.Collections;
 
 public class MissionManager : MonoBehaviour {
 
-	private const float LEVEL_TIME = 1;
-	private const float MAX_MISSION_TIME = 3f;
-	private const float MIN_MISSION_TIME = 1f;
-
 	public ScoreScreen scores;
 	public SpriteRenderer Player1;
 	private int Score1;
 	public SpriteRenderer Player2;
 	private int Score2;
-	public GameObject[] Levels;
+	public Level[] Levels;
 	private Component[] sprites;
 	private int level;
 	public GameHex[] GameHexes;
@@ -37,7 +33,7 @@ public class MissionManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)) 
 		{
 			if (running)
-				Levelend();
+				endLevel();
 			else
 				Application.Quit(); 
 		}
@@ -50,7 +46,7 @@ public class MissionManager : MonoBehaviour {
 		Score2 = 0;
 		level=0;
 		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
-		Invoke("nextLevel",LEVEL_TIME);//"Invoke" calls the function/methud that is inside the(""), the number is the number of secends before it das that.
+		Invoke("nextLevel",Levels[level].levelTime);//"Invoke" calls the function/methud that is inside the(""), the number is the number of secends before it das that.
 		switchMissions();
 
 		foreach (GameHex hex in GameHexes)
@@ -70,18 +66,18 @@ public class MissionManager : MonoBehaviour {
 
 		if(level == Levels.Length)
 		{
-			Levelend();
+			endLevel();
 			return;
 		}
 
 		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
-		Invoke("nextLevel",LEVEL_TIME);
+		Invoke("nextLevel",Levels[level].levelTime);
 
 		CancelInvoke("switchMissions");
 		switchMissions();
 	}
 	
-	private void Levelend()
+	private void endLevel()
 	{
 		running = false;
 		CancelInvoke();
@@ -94,9 +90,9 @@ public class MissionManager : MonoBehaviour {
 	private void pressed(Sprite sprite)
 	{
 		if (Player1.sprite == sprite)
-			Score1++;
+			Score1+=Levels[level].scorePerHit;
 		if(Player2.sprite == sprite)
-			Score2++;
+			Score2+=Levels[level].scorePerHit;
 	}
 
 	private void switchMissions()
@@ -105,6 +101,6 @@ public class MissionManager : MonoBehaviour {
 		Player2.sprite = randomImage();
 		while (Player1.sprite == Player2.sprite)
 			Player2.sprite = randomImage();
-		Invoke("switchMissions",Random.Range(MIN_MISSION_TIME,MAX_MISSION_TIME));
+		Invoke("switchMissions",Random.Range(Levels[level].missionMinTime,Levels[level].missionMaxTime));
 	}
 }

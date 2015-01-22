@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400004}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: level1
   m_TagString: Untagged
@@ -85,6 +86,21 @@ Transform:
   - {fileID: 400000}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6dfebe5511d428bb08d3a0c6aa51ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelTime: 10
+  missionMaxTime: 3
+  missionMinTime: 1
+  scorePerHit: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
