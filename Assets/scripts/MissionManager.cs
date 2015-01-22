@@ -74,9 +74,6 @@ public class MissionManager : MonoBehaviour {
 
 		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
 		Invoke("nextLevel",Levels[level].levelTime);
-
-		CancelInvoke("switchMissions");
-		switchMissions();
 	}
 	
 	private void endGame()
