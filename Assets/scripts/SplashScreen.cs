@@ -13,8 +13,12 @@ public class SplashScreen : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		renderer.enabled=true;
+		play();
 	}
 	
-
+	public void play()
+	{
+		renderer.enabled=true;
+		collider2D.enabled=true;
+	}
 }
