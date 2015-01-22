@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class GameHex : MonoBehaviour {
-
-	public Sprite[] spritesLvl1;
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -15,4 +14,6 @@ public class GameHex : MonoBehaviour {
 	{
 		
 	}
+
+
 }
