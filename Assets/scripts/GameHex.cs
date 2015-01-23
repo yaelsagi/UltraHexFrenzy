@@ -7,6 +7,7 @@ public class GameHex : MonoBehaviour {
 
 	private const float MAX_WAIT = 3f;
 	private const int VISBLE_TIME = 3;
+	private bool HexIsHere=false;
 
 	// Use this for initialization
 	void Start () 
@@ -22,7 +23,8 @@ public class GameHex : MonoBehaviour {
 
 	private void appear()
 	{
-		renderer.enabled = true;
+		animation.Play("GameHexAppear");
+		HexIsHere=true;
 		GetComponent<SpriteRenderer>().sprite = MissionManager.RandomImage();
 		Invoke("disappear", VISBLE_TIME);
 		Invoke("appear", VISBLE_TIME + Random.Range(0,MAX_WAIT));
@@ -30,12 +32,14 @@ public class GameHex : MonoBehaviour {
 	
 	private void disappear()
 	{
-		renderer.enabled = false;
+		HexIsHere=false;
+		animation.Play("GameHexDisappear");
 	}
 	
 	public void init()
 	{
-		disappear();
+		renderer.enabled = true;
+		//disappear();
 		CancelInvoke();
 		Invoke("appear", Random.Range(0f,MAX_WAIT));
 	}
@@ -44,11 +48,13 @@ public class GameHex : MonoBehaviour {
 	{
 		CancelInvoke();
 		disappear();
+		renderer.enabled = false;
 	}
 
 	void OnMouseDown() 
 	{
-		if (renderer.enabled)
+//		if (renderer.enabled)
+		if(HexIsHere&&!animation["GameHexDisappear"].enabled)
 		{
 			MissionManager.Pressed(GetComponent<SpriteRenderer>());
 			CancelInvoke();

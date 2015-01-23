@@ -15,6 +15,8 @@ public class MissionManager : MonoBehaviour {
 	private bool running = false;
 	public AudioSource missionSwitch;
 	public Spark spark;
+	public GameObject ColorfullLightsUp;
+	public GameObject ColorfullLightsDown;
 
 	// Static access
 	private static MissionManager instance;
@@ -48,11 +50,15 @@ public class MissionManager : MonoBehaviour {
 		Score2 = 0;
 		level=0;
 		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
+
 		Invoke("nextLevel",Levels[level].levelTime);//"Invoke" calls the function/methud that is inside the(""), the number is the number of secends before it das that.
 		switchMissions();
 
 		foreach (GameHex hex in GameHexes)
 			hex.init();
+
+		ColorfullLightsUp.SetActive(false);
+		ColorfullLightsDown.SetActive(false);
 	}
 
 	public Sprite randomImage()
@@ -75,6 +81,7 @@ public class MissionManager : MonoBehaviour {
 		sprites = Levels[level].GetComponentsInChildren<SpriteRenderer>(true);
 		Invoke("nextLevel",Levels[level].levelTime);
 	}
+
 	
 	private void endGame()
 	{
@@ -114,7 +121,23 @@ public class MissionManager : MonoBehaviour {
 		while (Player1.sprite == Player2.sprite)
 			Player2.sprite = randomImage();
 		if(old1 != null && old2 != null && (old1 != Player1.sprite || old2 != Player2.sprite))
+		{
 			missionSwitch.Play();
+
+			if (old1 != Player1.sprite)
+				ColorfullLightsUp.SetActive(true);
+			if (old2 != Player2.sprite)
+				ColorfullLightsDown.SetActive(true);
+
+			Invoke("TernOffColorfullLights", 0.2f);
+		}
 		Invoke("switchMissions",Random.Range(Levels[level].missionMinTime,Levels[level].missionMaxTime));
+	}
+
+	
+	private void TernOffColorfullLights()
+	{
+		ColorfullLightsUp.SetActive(false);
+		ColorfullLightsDown.SetActive(false);
 	}
 }

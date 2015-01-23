@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent (typeof (SpriteRenderer))]
 public class ScoreScreen : MonoBehaviour 
 {
-	private const float MIN_SHOW_TIME = 3f;
+	private const float MIN_SHOW_TIME = 4f;
 	public TextMesh score1;
 	public TextMesh score2;
 	public GameObject winner1;
