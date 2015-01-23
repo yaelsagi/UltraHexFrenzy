@@ -123,7 +123,6 @@ public class MissionManager : MonoBehaviour {
 		if(old1 != null && old2 != null && (old1 != Player1.sprite || old2 != Player2.sprite))
 		{
 			missionSwitch.Play();
-
 			if (old1 != Player1.sprite)
 				ColorfullLightsUp.SetActive(true);
 			if (old2 != Player2.sprite)

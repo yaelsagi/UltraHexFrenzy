@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6dfebe5511d428bb08d3a0c6aa51ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelTime: 20
-  missionMaxTime: 15
+  levelTime: 10
+  missionMaxTime: 3
   missionMinTime: 1
   scorePerHit: 1
 --- !u!212 &21200008

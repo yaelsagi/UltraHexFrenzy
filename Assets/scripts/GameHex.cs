@@ -8,6 +8,7 @@ public class GameHex : MonoBehaviour {
 	private const float MAX_WAIT = 3f;
 	private const int VISBLE_TIME = 3;
 	private bool HexIsHere=false;
+	private bool TouchedHex=false;
 
 	// Use this for initialization
 	void Start () 
@@ -18,7 +19,39 @@ public class GameHex : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		
+//		gameObject.tag = "laserhittag"; 
+//		if(TouchedHex=true)
+//		{
+//			foreach (Touch touch in Input.touches)
+//			{
+	//			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position),Vector2.zero);
+			 
+//				if (hit.collider.tag == "GameHex")
+//				{
+//					MissionManager.Pressed(GetComponent<SpriteRenderer>());
+//					CancelInvoke();
+//					disappear();
+//					Invoke("appear", Random.Range(0,MAX_WAIT));
+//					TouchedHex=false;
+//				}
+//			}
+	//	}
+
+//		int i = 0;
+//		while (i < Input.touchCount)
+	//	{
+	//		if (Input.GetTouch(i).phase == TouchPhase.Began)
+	//		{
+	//			var hit : RaycastHit;
+	//			var ray : Ray = camera.ScreenPointToRay(Vector3(Touch.x,Touch.y,0));
+	//			if(physics.Raycast(ray, hit) && hit.transform.tag == "selectable")
+
+	//		}
+
+	//		++i;
+//		}
+			
+
 	}
 
 	private void appear()
@@ -53,13 +86,14 @@ public class GameHex : MonoBehaviour {
 
 	void OnMouseDown() 
 	{
-//		if (renderer.enabled)
+////////		if (renderer.enabled)
 		if(HexIsHere&&!animation["GameHexDisappear"].enabled)
 		{
 			MissionManager.Pressed(GetComponent<SpriteRenderer>());
 			CancelInvoke();
 			disappear();
 			Invoke("appear", Random.Range(0,MAX_WAIT));
+//			TouchedHex=true;
 		}
 	}
 }

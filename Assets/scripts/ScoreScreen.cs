@@ -4,7 +4,11 @@ using System.Collections;
 [RequireComponent (typeof (SpriteRenderer))]
 public class ScoreScreen : MonoBehaviour 
 {
-	private const float MIN_SHOW_TIME = 4f;
+
+	public GameObject CreditHeartHex;
+	public GameObject Credit;
+
+	private const float MIN_SHOW_TIME = 5f;
 	public TextMesh score1;
 	public TextMesh score2;
 	public GameObject winner1;
@@ -15,14 +19,19 @@ public class ScoreScreen : MonoBehaviour
 	public Sprite gameTie;
 	public Sprite playAgain;
 
+
+
 	void OnMouseDown() 
 	{
 		gameObject.SetActive(false);
 		MissionManager.Init();
+		CreditHeartHex.SetActive(false);
+		Credit.SetActive(false);
 	}
 
 	public void play(int s1, int s2)
 	{
+	
 
 		if (s1 == s2)
 			GetComponent<SpriteRenderer>().sprite = gameTie;
@@ -43,6 +52,9 @@ public class ScoreScreen : MonoBehaviour
 
 	private void enableLeave()
 	{
+//		CreditHeartHex.SetActive(true);
+		Credit.SetActive(true);
+	//	CreditHeartHex.renderer.enabled=true;
 		GetComponent<SpriteRenderer>().sprite = playAgain;
 		collider2D.enabled=true;
 	}

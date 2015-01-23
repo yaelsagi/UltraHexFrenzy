@@ -8,6 +8,7 @@ public class SplashScreen : MonoBehaviour
 		renderer.enabled=false;
 		collider2D.enabled=false;
 		MissionManager.Init();
+
 	}
 
 	// Use this for initialization
